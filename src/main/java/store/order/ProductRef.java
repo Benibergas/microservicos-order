@@ -3,9 +3,7 @@ package store.order;
 import lombok.Builder;
 import lombok.experimental.Accessors;
 
-@Builder
-@Accessors(fluent = true)
+@Builder @Accessors(fluent = true)
 public record ProductRef(
-        String idProduct
-) {
-}
+    String id
+) {}

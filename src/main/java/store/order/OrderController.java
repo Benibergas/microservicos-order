@@ -1,30 +1,38 @@
 package store.order;
 
+import java.util.List;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.core.annotation.Order;
-import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @FeignClient(name = "order", url = "http://order:8080")
 public interface OrderController {
-    @PostMapping("/order")
-    public ResponseEntity<OrderOut> create(
-            @RequestBody OrderIn orderIn,
-            @RequestHeader(value = "id-account", required = true) String idAccount
-    );
 
+    @PostMapping("/order")
+    ResponseEntity<OrderOut> create(
+            @RequestBody OrderIn orderIn,
+            @RequestHeader("User-Id") String userId
+    );
 
     @GetMapping("/order")
-    public ResponseEntity<List<OrderOut>> findAll(
-            @RequestHeader(value = "id-account", required = true) String idAccount
-    );
+    ResponseEntity<List<OrderOut>> findAll(@RequestHeader("User-Id") String userId);
 
     @GetMapping("/order/{id}")
-    public ResponseEntity<OrderDetailOut> findById(
-            @PathVariable String id,
-            @RequestHeader(value = "id-account", required = true) String idAccount
+    ResponseEntity<OrderOut> findByIdOrder(
+            @PathVariable("id") String idOrder,
+            @RequestHeader("User-Id") String userId
+    );
+
+    @PutMapping("/order/{id}")
+    ResponseEntity<OrderOut> update(
+            @PathVariable("id") String idOrder,
+            @RequestBody OrderIn orderIn,
+            @RequestHeader("User-Id") String userId
+    );
+
+    @DeleteMapping("/order/{id}")
+    ResponseEntity<Void> delete(
+            @PathVariable("id") String idOrder,
+            @RequestHeader("User-Id") String userId
     );
 }

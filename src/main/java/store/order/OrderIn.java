@@ -1,14 +1,13 @@
 package store.order;
 
+import java.util.List;
 
 import lombok.Builder;
 import lombok.experimental.Accessors;
 
-import java.util.List;
-
-@Builder
-@Accessors(fluent = true)
+@Builder @Accessors(fluent = true)
 public record OrderIn(
-        List<ItemIn> items
+    List<ItemIn> items
 ) {
+
 }
